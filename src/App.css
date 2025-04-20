@@ -1,5 +1,5 @@
 /* App.css */
-
+ 
 body, html {
     margin: 0;
     padding: 0;
@@ -57,4 +57,4 @@ body, html {
 
 .back-button:hover {
     background-color: #4a4acb;
-}
+} 

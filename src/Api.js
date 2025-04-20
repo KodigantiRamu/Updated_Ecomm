@@ -53,16 +53,57 @@ export const removeCartItem = async (cartItemId) => {
   }
 };
 
-// Checkout cart
-export const checkoutCart = async (cartId, address, paymentStatus) => {
+// Checkout cart - This is the main function used for checkout
+export const checkoutCart = async (cartId, shippingAddress, paymentStatus) => {
   try {
+    // Using the specific checkout endpoint from your API
     const response = await axios.post(`${API_URL}/CartItem/checkout/${cartId}`, {
-      address,
+      shippingAddress,
       paymentStatus
     });
     return response.data;
   } catch (error) {
     console.error('Error during checkout:', error);
+    throw error;
+  }
+};
+
+
+
+
+// Alternative - Create order from cart if the above endpoint doesn't work
+export const createOrderFromCart = async (cartId, shippingAddress, paymentStatus) => {
+  try {
+    const response = await axios.post(`${API_URL}/Order/create-from-cart`, {
+      cartId,
+      shippingAddress,
+      paymentStatus
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating order from cart:', error);
+    throw error;
+  }
+};
+
+// Get order details
+export const getOrderDetails = async (orderId) => {
+  try {
+    const response = await axios.get(`${API_URL}/Order/${orderId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching order details:', error);
+    throw error;
+  }
+};
+
+// Get all orders for a user
+export const getUserOrders = async (userId) => {
+  try {
+    const response = await axios.get(`${API_URL}/Order/user/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user orders:', error);
     throw error;
   }
 };
